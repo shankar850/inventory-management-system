@@ -1,5 +1,5 @@
 # Inventory Management System
-Built to learn full-stack development with Angular and ASP.NET Core.
+ Built to learn full-stack development with Angular and ASP.NET Core.
 
 A full-stack inventory management application built with **Angular**, **ASP.NET Core Web API**, **Entity Framework Core** and *SQL Server*.
 
