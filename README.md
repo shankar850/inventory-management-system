@@ -1,4 +1,7 @@
 # Inventory Management System
+
+[![CI](https://github.com/shankar850/inventory-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/shankar850/inventory-management-system/actions/workflows/ci.yml)
+
  Built to learn full-stack development with Angular and ASP.NET Core.
 
 A full-stack inventory management application built with **Angular**, **ASP.NET Core Web API**, **Entity Framework Core** and *SQL Server*.
