@@ -1,6 +1,7 @@
 # Inventory Management System
+Built to learn full-stack development with Angular and ASP.NET Core.
 
-A full-stack inventory management application built with **Angular**, **ASP.NET Core Web API**, **Entity Framework Core** and **SQL Server**.
+A full-stack inventory management application built with **Angular**, **ASP.NET Core Web API**, **Entity Framework Core** and *SQL Server*.
 
 > Status: work in progress. The backend API is under development, and the Angular client comes next.
 
@@ -9,7 +10,7 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 - **Backend:** ASP.NET Core Web API (.NET 10), C#
 - **Database:** SQL Server with EF Core (code-first migrations)
 - **Frontend:** Angular, TypeScript (planned)
-- **API docs:** Swagger (Swashbuckle)
+- **API docs:** Swagger (Swashbuckle).
 
 ## Features
 
