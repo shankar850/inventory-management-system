@@ -15,7 +15,7 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 
 - [x] Product API: create, list, and get by id
 - [x] DTOs with validation, separate from database entities
-- [ ] Update and delete products
+- [x] Update and delete products
 - [ ] Categories and suppliers
 - [ ] JWT authentication with roles
 - [ ] Purchase and sales orders with stock history
