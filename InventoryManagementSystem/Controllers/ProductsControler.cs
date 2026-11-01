@@ -32,7 +32,6 @@ namespace InventoryManagementSystem.Controllers
             return Ok(items);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateDto dto)
         {
@@ -96,6 +95,22 @@ namespace InventoryManagementSystem.Controllers
 
 
             await _db.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _db.Products.FindAsync(id);
+            if (product == null)
+                return NotFound();
+
+            _db.Products.Remove(product);
+            await _db.SaveChangesAsync();
+
             return NoContent();
 
         }
