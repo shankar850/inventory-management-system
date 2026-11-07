@@ -74,6 +74,23 @@ namespace InventoryManagementSystem.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var category = await _db.Categories.FindAsync(id);
+            if (category == null)
+                return NotFound();
+
+            var hasProducts = await _db.Products.AnyAsync(p => p.CategoryId == id);
+            if (hasProducts)
+                return Conflict(new { message = "Cannot delete a category that still has products." });
+
+            _db.Categories.Remove(category);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
 
