@@ -41,6 +41,20 @@ namespace InventoryManagementSystem.Controllers
 
             return CreatedAtAction(nameof(GetAll), new { id = category.Id }, new { category.Id, category.Name });
         }
+
+        [HttpGet("{id:int}")]
+        public async Task <IActionResult> GetById (int id)
+        {
+            var category = await _db.Categories.AsNoTracking()
+                .Where(c => c.Id == id)
+                .Select(c => new {c.Id, c.Name,ProductCount = c.products.Count})
+                .FirstOrDefaultAsync();
+
+            if (category == null)
+                return NotFound();
+
+            return CreatedAtAction(nameof(GetById), new { id = category.Id }, new { category.Id, category.Name });
+        }
     }
 }
 
