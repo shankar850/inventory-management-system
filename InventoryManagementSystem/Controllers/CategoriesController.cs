@@ -55,6 +55,25 @@ namespace InventoryManagementSystem.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = category.Id }, new { category.Id, category.Name });
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, CategoryUpdateDto dto)
+        {
+            var category = await _db.Categories.FindAsync(id);
+            if (category == null)
+                return NotFound();
+
+            var name = dto.Name.Trim();
+
+            var duplicate = await _db.Categories.AnyAsync(c => c.Name == name && c.Id != id);
+            if (duplicate)
+                return Conflict(new { message = "Category already exists." });
+
+            category.Name = name;
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
 
