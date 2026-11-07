@@ -1,0 +1,53 @@
+<h2>Add product</h2>
+<p><a routerLink="/products">← Back to product list</a></p>
+
+
+@if (errorMessage()) {
+  <p style="color: #b00020">{{ errorMessage() }}</p>
+}
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div>
+    <label for="name">Name</label><br>
+    <input id="name" type="text" formControlName="name">
+  </div>
+
+  <div>
+    <label for="sku">SKU</label><br>
+    <input id="sku" type="text" formControlName="sku">
+  </div>
+
+  <div>
+    <label for="description">Description</label><br>
+    <input id="description" type="text" formControlName="description">
+  </div>
+
+  <div>
+    <label for="price">Price</label><br>
+    <input id="price" type="number" formControlName="price">
+  </div>
+
+  <div>
+    <label for="quantityInStock">Quantity in stock</label><br>
+    <input id="quantityInStock" type="number" formControlName="quantityInStock">
+  </div>
+
+  <div>
+    <label for="reorderLevel">Reorder level</label><br>
+    <input id="reorderLevel" type="number" formControlName="reorderLevel">
+  </div>
+
+  <div>
+    <label for="categoryId">Category</label><br>
+    <select id="categoryId" formControlName="categoryId">
+      <option [ngValue]="0" disabled>Select category</option>
+      @for (c of categories(); track c.id) {
+        <option [ngValue]="c.id">{{ c.name }}</option>
+      }
+    </select>
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="form.invalid">Save</button>
+  </div>
+</form>
