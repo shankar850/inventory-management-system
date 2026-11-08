@@ -1,6 +1,7 @@
 ﻿using InventoryManagementSystem.Data;
 using InventoryManagementSystem.DTO;
 using InventoryManagementSystem.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -75,6 +76,7 @@ namespace InventoryManagementSystem.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

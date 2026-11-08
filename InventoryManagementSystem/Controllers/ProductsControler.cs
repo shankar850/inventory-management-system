@@ -1,6 +1,7 @@
 ﻿using InventoryManagementSystem.Data;
 using InventoryManagementSystem.DTO;
 using InventoryManagementSystem.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static InventoryManagementSystem.DTO.ProdcutCreateDto;
@@ -8,6 +9,7 @@ using static InventoryManagementSystem.DTO.ProdcutCreateDto;
 namespace InventoryManagementSystem.Controllers
 {
 
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase

@@ -9,11 +9,14 @@ namespace InventoryManagementSystem.Data
 
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder b)
         {
             b.Entity<Product>().Property(p => p.Price).HasPrecision(18, 2);
             b.Entity<Product>().HasIndex(p => p.Sku).IsUnique();
+
+            b.Entity<User>().HasIndex(u => u.Username).IsUnique();
 
             b.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Electronics" },
