@@ -23,8 +23,8 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 - [x] JWT login with roles: Admin can do everything, Staff cannot delete
 - [x] Angular route guard, HTTP interceptor and role-based UI
 - [x] GitHub Actions workflow that builds the solution on every push
-- [ ] Category add, edit and delete screens
-- [ ] Unit tests
+- [x] Categories: full CRUD in the API and the Angular UI
+- [x] Unit tests for password hashing, run in CI (controller tests planned)
 - [ ] Suppliers, purchase and sales orders, stock movement history
 - [ ] Dashboard with low-stock alerts
 
