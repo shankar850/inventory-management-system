@@ -1,25 +1,28 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../models/category';
 import { ProductCreate } from '../../models/product-create';
+import { ProductUpdate } from '../../models/product-update';
 import { CategoryApi } from '../../services/category-api';
 import { ProductApi } from '../../services/product-api';
-import { Router, RouterLink } from '@angular/router';
-imports: [ReactiveFormsModule, RouterLink]
+
 @Component({
   selector: 'app-product-form',
-  templateUrl: './product-form.html',
-  styleUrl: './product-form.css',
   imports: [ReactiveFormsModule, RouterLink],
+  templateUrl: './product-form.html',
+  styleUrl: './product-form.css'
 })
 export class ProductForm implements OnInit {
   private fb = inject(FormBuilder);
   private categoryApi = inject(CategoryApi);
   private productApi = inject(ProductApi);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   categories = signal<Category[]>([]);
   errorMessage = signal('');
+  productId = signal<number | null>(null);
 
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(100)]],
@@ -36,18 +39,53 @@ export class ProductForm implements OnInit {
       next: data => this.categories.set(data),
       error: () => this.errorMessage.set('Could not load categories. Is the API running?')
     });
+
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      const id = Number(idParam);
+      this.productId.set(id);
+      this.form.controls.sku.disable();
+      this.form.controls.quantityInStock.disable();
+
+      this.productApi.getById(id).subscribe({
+        next: p => this.form.patchValue({
+          name: p.name,
+          sku: p.sku,
+          description: p.description ?? '',
+          price: p.price,
+          quantityInStock: p.quantityInStock,
+          reorderLevel: p.reorderLevel,
+          categoryId: p.categoryId
+        }),
+        error: () => this.errorMessage.set('Could not load the product.')
+      });
+    }
   }
 
   save(): void {
     if (this.form.invalid) return;
 
-    const product: ProductCreate = this.form.getRawValue();
-    this.productApi.create(product).subscribe({
-      next: () => this.router.navigate(['/products']),
-      error: () => this.errorMessage.set('Could not save. Check the values, and that the SKU is not already used.')
-    });
+    const v = this.form.getRawValue();
+    const id = this.productId();
 
-
-
+    if (id === null) {
+      const product: ProductCreate = v;
+      this.productApi.create(product).subscribe({
+        next: () => this.router.navigate(['/products']),
+        error: () => this.errorMessage.set('Could not save. Check the values, and that the SKU is not already used.')
+      });
+    } else {
+      const product: ProductUpdate = {
+        name: v.name,
+        description: v.description || null,
+        price: v.price,
+        reorderLevel: v.reorderLevel,
+        categoryId: v.categoryId
+      };
+      this.productApi.update(id, product).subscribe({
+        next: () => this.router.navigate(['/products']),
+        error: () => this.errorMessage.set('Could not update the product.')
+      });
+    }
   }
 }

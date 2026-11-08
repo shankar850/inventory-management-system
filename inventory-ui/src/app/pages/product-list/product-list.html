@@ -24,10 +24,13 @@
         <td>{{ p.categoryName }}</td>
         <td>{{ p.price | currency:'INR' }}</td>
         <td>{{ p.quantityInStock }}</td>
-        <td><button type="button" (click)="remove(p)">Delete</button></td>
+        <td>
+          <a [routerLink]="['/products', p.id, 'edit']">Edit</a>
+          <button type="button" (click)="remove(p)">Delete</button>
+        </td>
       </tr>
     } @empty {
-      <tr><td colspan="5">No products found</td></tr>
+      <tr><td colspan="6">No products found</td></tr>
     }
   </tbody>
 </table>
