@@ -1,1 +1,20 @@
-<p>category-form works!</p>
+<h2>{{ categoryId() === null ? 'Add category' : 'Edit category' }}</h2>
+<p><a routerLink="/categories">← Back to category list</a></p>
+
+@if (errorMessage()) {
+  <p class="error">{{ errorMessage() }}</p>
+}
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div>
+    <label for="name">Name</label><br>
+    <input id="name" type="text" formControlName="name">
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <br><small class="error">Name is required (maximum 100 characters).</small>
+    }
+  </div>
+
+  <div style="margin-top: 12px">
+    <button type="submit">Save</button>
+  </div>
+</form>

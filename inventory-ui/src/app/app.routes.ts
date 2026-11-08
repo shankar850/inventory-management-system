@@ -4,6 +4,10 @@ import { ProductForm } from './pages/product-form/product-form';
 import { CategoryList } from './pages/category-list/category-list';
 import { Login } from './pages/login/login';
 import { authGuard } from './guards/auth.guards';
+import { CategoryForm } from './pages/category-form/category-form';
+
+
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -11,5 +15,9 @@ export const routes: Routes = [
   { path: 'products', component: ProductList, canActivate: [authGuard] },
   { path: 'products/new', component: ProductForm, canActivate: [authGuard] },
   { path: 'products/:id/edit', component: ProductForm, canActivate: [authGuard] },
-  { path: 'categories', component: CategoryList, canActivate: [authGuard] }
+  { path: 'categories', component: CategoryList, canActivate: [authGuard] },
+
+  { path: 'categories', component: CategoryList, canActivate: [authGuard] },
+  { path: 'categories/new', component: CategoryForm, canActivate: [authGuard] },
+  { path: 'categories/:id/edit', component: CategoryForm, canActivate: [authGuard] }
 ];

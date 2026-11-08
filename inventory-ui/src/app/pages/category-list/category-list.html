@@ -1,5 +1,5 @@
 <h2>Categories</h2>
-<p><a routerLink="/categories/new"></a>+ Add Category</p>
+<p><a routerLink="/categories/new">+ Add category</a></p>
 
 @if (errorMessage()) {
   <p class="error">{{ errorMessage() }}</p>
@@ -9,8 +9,9 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>name</th>
+      <th>Name</th>
       <th>Products</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -19,9 +20,15 @@
         <td>{{ c.id }}</td>
         <td>{{ c.name }}</td>
         <td>{{ c.productCount }}</td>
+        <td>
+          <a [routerLink]="['/categories', c.id, 'edit']">Edit</a>
+          @if (auth.isAdmin()) {
+            <button type="button" (click)="remove(c)">Delete</button>
+          }
+        </td>
       </tr>
     } @empty {
-      <tr><td colspan="3">No categories found</td></tr>
+      <tr><td colspan="4">No categories found</td></tr>
     }
   </tbody>
 </table>

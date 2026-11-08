@@ -76,6 +76,7 @@ namespace InventoryManagementSystem.Controllers
             return NoContent();
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
