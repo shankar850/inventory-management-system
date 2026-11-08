@@ -25,6 +25,9 @@ jobs:
       - name: Build
         run: dotnet build InventoryManagementSystem.slnx --no-restore --configuration Release
 
+      - name: Test
+        run: dotnet test InventoryManagementSystem.slnx --no-build --configuration Release
+
   client:
     runs-on: ubuntu-latest
     defaults:
