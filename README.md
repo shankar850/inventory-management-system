@@ -77,6 +77,12 @@ Open `http://localhost:4200`.
 
 These users are created automatically in the Development environment only. The JWT signing key is stored in User Secrets, never in the repository.
 
+## Screenshots
+
+![Login](docs/images/login.png)
+![Products](docs/images/products.png)
+![Swagger](docs/images/swagger.png)
+
 ## Project structure
 
 ```
