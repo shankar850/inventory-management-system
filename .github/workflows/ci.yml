@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  api:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -24,3 +24,25 @@ jobs:
 
       - name: Build
         run: dotnet build InventoryManagementSystem.slnx --no-restore --configuration Release
+
+  client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: inventory-ui
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: inventory-ui/package-lock.json
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Build Angular app
+        run: npm run build
