@@ -1,20 +1,25 @@
 <h2>{{ productId() === null ? 'Add product' : 'Edit product' }}</h2>
 <p><a routerLink="/products">← Back to product list</a></p>
 
-
 @if (errorMessage()) {
-  <p style="color: #b00020">{{ errorMessage() }}</p>
+  <p class="error">{{ errorMessage() }}</p>
 }
 
 <form [formGroup]="form" (ngSubmit)="save()">
   <div>
     <label for="name">Name</label><br>
     <input id="name" type="text" formControlName="name">
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <br><small class="error">Name is required (maximum 100 characters).</small>
+    }
   </div>
 
   <div>
     <label for="sku">SKU</label><br>
     <input id="sku" type="text" formControlName="sku">
+    @if (form.controls.sku.touched && form.controls.sku.invalid) {
+      <br><small class="error">SKU is required (maximum 50 characters).</small>
+    }
   </div>
 
   <div>
@@ -25,16 +30,25 @@
   <div>
     <label for="price">Price</label><br>
     <input id="price" type="number" formControlName="price">
+    @if (form.controls.price.touched && form.controls.price.invalid) {
+      <br><small class="error">Price must be greater than 0.</small>
+    }
   </div>
 
   <div>
     <label for="quantityInStock">Quantity in stock</label><br>
     <input id="quantityInStock" type="number" formControlName="quantityInStock">
+    @if (form.controls.quantityInStock.touched && form.controls.quantityInStock.invalid) {
+      <br><small class="error">Quantity cannot be negative.</small>
+    }
   </div>
 
   <div>
     <label for="reorderLevel">Reorder level</label><br>
     <input id="reorderLevel" type="number" formControlName="reorderLevel">
+    @if (form.controls.reorderLevel.touched && form.controls.reorderLevel.invalid) {
+      <br><small class="error">Reorder level cannot be negative.</small>
+    }
   </div>
 
   <div>
@@ -45,9 +59,12 @@
         <option [ngValue]="c.id">{{ c.name }}</option>
       }
     </select>
+    @if (form.controls.categoryId.touched && form.controls.categoryId.invalid) {
+      <br><small class="error">Please choose a category.</small>
+    }
   </div>
 
   <div>
-    <button type="submit" [disabled]="form.invalid">Save</button>
+    <button type="submit">Save</button>
   </div>
 </form>

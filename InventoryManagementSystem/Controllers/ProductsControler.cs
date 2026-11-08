@@ -32,27 +32,7 @@ namespace InventoryManagementSystem.Controllers
             return Ok(items);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(ProductCreateDto dto)
-        {
-            var product = new Product
-            {
-                Name = dto.Name,
-                Sku = dto.Sku,
-                Description = dto.Description,
-                Price = dto.Price,
-                QuantityInStock = dto.QuantityInStock,
-                ReorderLevel = dto.ReorderLevel,
-                CategoryId = dto.CategoryId
-            };
-
-            _db.Products.Add(product);
-            await _db.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetAll), new { id = product.Id }, new { product.Id, product.Name });
-        }
-
-
+        
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -79,13 +59,45 @@ namespace InventoryManagementSystem.Controllers
         }
 
 
-        [HttpPut("{id:int}")]
-    public async Task<IActionResult>Update(int id,ProductUpdateDto dto )
-    {
-            var product = await _db.Products.FindAsync(id);
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductCreateDto dto)
+        {
+            var categoryExists = await _db.Categories.AnyAsync(c => c.Id == dto.CategoryId);
+            if (!categoryExists)
+                return BadRequest(new { message = "Category does not exist." });
 
+            var sku = dto.Sku.Trim();
+            var skuExists = await _db.Products.AnyAsync(p => p.Sku == sku);
+            if (skuExists)
+                return Conflict(new { message = "SKU already exists." });
+
+            var product = new Product
+            {
+                Name = dto.Name,
+                Sku = sku,
+                Description = dto.Description,
+                Price = dto.Price,
+                QuantityInStock = dto.QuantityInStock,
+                ReorderLevel = dto.ReorderLevel,
+                CategoryId = dto.CategoryId
+            };
+
+            _db.Products.Add(product);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, new { product.Id, product.Name });
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, ProductUpdateDto dto)
+        {
+            var product = await _db.Products.FindAsync(id);
             if (product == null)
                 return NotFound();
+
+            var categoryExists = await _db.Categories.AnyAsync(c => c.Id == dto.CategoryId);
+            if (!categoryExists)
+                return BadRequest(new { message = "Category does not exist." });
 
             product.Name = dto.Name;
             product.Description = dto.Description;
@@ -93,12 +105,9 @@ namespace InventoryManagementSystem.Controllers
             product.ReorderLevel = dto.ReorderLevel;
             product.CategoryId = dto.CategoryId;
 
-
             await _db.SaveChangesAsync();
             return NoContent();
-
         }
-
 
 
         [HttpDelete("{id:int}")]

@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../models/category';
@@ -62,8 +63,15 @@ export class ProductForm implements OnInit {
     }
   }
 
+  private serverMessage(err: HttpErrorResponse, fallback: string): string {
+    return err.error?.message ?? fallback;
+  }
+
   save(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const v = this.form.getRawValue();
     const id = this.productId();
@@ -72,7 +80,8 @@ export class ProductForm implements OnInit {
       const product: ProductCreate = v;
       this.productApi.create(product).subscribe({
         next: () => this.router.navigate(['/products']),
-        error: () => this.errorMessage.set('Could not save. Check the values, and that the SKU is not already used.')
+        error: (err: HttpErrorResponse) =>
+          this.errorMessage.set(this.serverMessage(err, 'Could not save the product.'))
       });
     } else {
       const product: ProductUpdate = {
@@ -84,7 +93,8 @@ export class ProductForm implements OnInit {
       };
       this.productApi.update(id, product).subscribe({
         next: () => this.router.navigate(['/products']),
-        error: () => this.errorMessage.set('Could not update the product.')
+        error: (err: HttpErrorResponse) =>
+          this.errorMessage.set(this.serverMessage(err, 'Could not update the product.'))
       });
     }
   }
