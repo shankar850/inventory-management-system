@@ -1,10 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Category } from '../../models/category';
 import { CategoryApi } from '../../services/category-api';
 
 @Component({
   selector: 'app-category-list',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css'
 })

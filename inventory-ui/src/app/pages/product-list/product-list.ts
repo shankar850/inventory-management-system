@@ -21,4 +21,14 @@ export class ProductList implements OnInit {
       error: () => this.errorMessage.set('Could not load products. Is the API running?')
     });
   }
+
+  remove(p: Product): void {
+    if (!confirm(`Delete ${p.name}?`)) return;
+
+    this.api.delete(p.id).subscribe({
+      next: () => this.products.update(list => list.filter(x => x.id !== p.id)),
+      error: () => this.errorMessage.set('Could not delete the product.')
+    });
+  }
+
 }
