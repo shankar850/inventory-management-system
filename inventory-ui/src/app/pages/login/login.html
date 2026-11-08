@@ -1,0 +1,21 @@
+<h2>Sign in</h2>
+
+@if (errorMessage()) {
+  <p style="color: #b00020">{{ errorMessage() }}</p>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div>
+    <label for="username">Username</label><br>
+    <input id="username" type="text" formControlName="username" autocomplete="username">
+  </div>
+
+  <div style="margin-top: 12px">
+    <label for="password">Password</label><br>
+    <input id="password" type="password" formControlName="password" autocomplete="current-password">
+  </div>
+
+  <div style="margin-top: 12px">
+    <button type="submit">Login</button>
+  </div>
+</form>

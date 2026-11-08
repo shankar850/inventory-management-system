@@ -13,7 +13,7 @@
       <th>Category</th>
       <th>Price</th>
       <th>Stock</th>
-      <th>Action</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -26,7 +26,9 @@
         <td>{{ p.quantityInStock }}</td>
         <td>
           <a [routerLink]="['/products', p.id, 'edit']">Edit</a>
-          <button type="button" (click)="remove(p)">Delete</button>
+          @if (auth.isAdmin()) {
+            <button type="button" (click)="remove(p)">Delete</button>
+          }
         </td>
       </tr>
     } @empty {

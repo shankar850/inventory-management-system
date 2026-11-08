@@ -14,6 +14,7 @@ var jwtKey = builder.Configuration["Jwt:Key"]
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

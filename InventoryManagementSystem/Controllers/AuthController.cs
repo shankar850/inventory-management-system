@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace InventoryManagementSystem.Controllers
 {
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly AppDBContext _db;
