@@ -13,17 +13,18 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 - **Database:** SQL Server with EF Core (code-first migrations)
 - **Security:** JWT bearer authentication, role-based authorization (Admin, Staff), PBKDF2 password hashing
 - **API docs:** Swagger (Swashbuckle)
-- **CI:** GitHub Actions
+- **CI:** GitHub Actions (builds the API, runs unit tests, builds the Angular client)
+
 
 ## Features
 
 - [x] Products: list, add, edit and delete (Angular UI and API)
-- [x] Categories: list, create, get by id and rename (API), list screen (UI)
+- [x] Categories: full CRUD in the API and the Angular UI
 - [x] DTOs with validation, clear 400 and 409 error responses (duplicate SKU, invalid category)
 - [x] JWT login with roles: Admin can do everything, Staff cannot delete
 - [x] Angular route guard, HTTP interceptor and role-based UI
 - [x] GitHub Actions workflow that builds the solution on every push
-- [x] Categories: full CRUD in the API and the Angular UI
+- [x] Category add, edit and delete screens (delete is Admin only and blocked while a category has products)
 - [x] Unit tests for password hashing, run in CI (controller tests planned)
 - [ ] Suppliers, purchase and sales orders, stock movement history
 - [ ] Dashboard with low-stock alerts
@@ -36,7 +37,7 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 | GET | `/api/Products`, `/api/Products/{id}` | Logged in |
 | POST | `/api/Products` | Logged in |
 | PUT | `/api/Products/{id}` | Logged in |
-| DELETE | `/api/Products/{id}` | **Admin only** |
+| DELETE | `/api/Categories/{id}` | **Admin only** (409 if the category has products) |
 | GET | `/api/Categories`, `/api/Categories/{id}` | Logged in |
 | POST | `/api/Categories` | Logged in |
 | PUT | `/api/Categories/{id}` | Logged in |
