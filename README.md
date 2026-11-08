@@ -2,52 +2,95 @@
 
 [![CI](https://github.com/shankar850/inventory-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/shankar850/inventory-management-system/actions/workflows/ci.yml)
 
- Built to learn full-stack development with Angular and ASP.NET Core.
+A full-stack inventory management application built with **Angular**, **ASP.NET Core Web API**, **Entity Framework Core** and **SQL Server**, with JWT authentication and role-based access.
 
-A full-stack inventory management application built with **Angular**, **ASP.NET Core Web API**, **Entity Framework Core** and *SQL Server*.
-
-> Status: work in progress. The backend API is under development, and the Angular client comes next.
+> Status: work in progress. Product management, categories and authentication are complete. Orders, stock history and a dashboard are planned.
 
 ## Tech stack
 
+- **Frontend:** Angular 22, TypeScript, Reactive Forms, standalone components, signals
 - **Backend:** ASP.NET Core Web API (.NET 10), C#
 - **Database:** SQL Server with EF Core (code-first migrations)
-- **Frontend:** Angular, TypeScript (planned)
-- **API docs:** Swagger (Swashbuckle).
+- **Security:** JWT bearer authentication, role-based authorization (Admin, Staff), PBKDF2 password hashing
+- **API docs:** Swagger (Swashbuckle)
+- **CI:** GitHub Actions
 
 ## Features
 
-- [x] Product API: create, list, and get by id
-- [x] DTOs with validation, separate from database entities
-- [x] Update and delete products
-- [ ] Categories and suppliers
-- [ ] JWT authentication with roles
-- [ ] Purchase and sales orders with stock history
-- [ ] Angular client and dashboard
+- [x] Products: list, add, edit and delete (Angular UI and API)
+- [x] Categories: list, create, get by id and rename (API), list screen (UI)
+- [x] DTOs with validation, clear 400 and 409 error responses (duplicate SKU, invalid category)
+- [x] JWT login with roles: Admin can do everything, Staff cannot delete
+- [x] Angular route guard, HTTP interceptor and role-based UI
+- [x] GitHub Actions workflow that builds the solution on every push
+- [ ] Category add, edit and delete screens
+- [ ] Unit tests
+- [ ] Suppliers, purchase and sales orders, stock movement history
+- [ ] Dashboard with low-stock alerts
 
-## Run the API locally
+## API overview
 
-**Prerequisites:** .NET 10 SDK, SQL Server or LocalDB, Visual Studio 2026 (or the `dotnet` CLI).
+| Method | Endpoint | Access |
+|---|---|---|
+| POST | `/api/Auth/login` | Public |
+| GET | `/api/Products`, `/api/Products/{id}` | Logged in |
+| POST | `/api/Products` | Logged in |
+| PUT | `/api/Products/{id}` | Logged in |
+| DELETE | `/api/Products/{id}` | **Admin only** |
+| GET | `/api/Categories`, `/api/Categories/{id}` | Logged in |
+| POST | `/api/Categories` | Logged in |
+| PUT | `/api/Categories/{id}` | Logged in |
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/shankar850/inventory-management-system.git
-   ```
-2. Check the connection string in `InventoryManagementSystem/appsettings.json`.
-3. Create the database (Package Manager Console):
-   ```
-   Update-Database
-   ```
-4. Run the project with the `https` profile.
-5. Open Swagger at `https://localhost:7292/swagger`.
+## Run locally
+
+**Prerequisites:** .NET 10 SDK, SQL Server or LocalDB, Node.js (LTS) and the Angular CLI.
+
+### 1. API
+
+```
+git clone https://github.com/shankar850/inventory-management-system.git
+cd inventory-management-system/InventoryManagementSystem
+dotnet user-secrets set "Jwt:Key" "<a long random secret, at least 32 characters>"
+dotnet ef database update
+dotnet run --launch-profile https
+```
+
+Swagger opens at `https://localhost:7292/swagger`.
+
+### 2. Angular client
+
+```
+cd inventory-ui
+npm install
+ng serve
+```
+
+Open `http://localhost:4200`.
+
+### Demo accounts (Development only)
+
+| Username | Password | Role |
+|---|---|---|
+| admin | Admin@123 | Admin |
+| staff | Staff@123 | Staff |
+
+These users are created automatically in the Development environment only. The JWT signing key is stored in User Secrets, never in the repository.
 
 ## Project structure
 
 ```
-InventoryManagementSystem/
-  Controllers/   API endpoints
-  Models/        Database entities
-  DTOs/          Request models with validation
-  Data/          EF Core DbContext
-  Migrations/    Database migrations
+InventoryManagementSystem/        ASP.NET Core Web API
+  Controllers/                    Auth, Products, Categories
+  Model/                          Entities (Product, Category, User)
+  DTOs/                           Request models with validation
+  Data/                           EF Core DbContext
+  Helpers/                        Password hashing
+  Migrations/                     Database migrations
+
+inventory-ui/                     Angular client
+  src/app/pages/                  Login, product list, product form, category list
+  src/app/services/               API and auth services
+  src/app/interceptors/           Adds the JWT to requests
+  src/app/guards/                 Protects routes
+  src/app/models/                 TypeScript interfaces
 ```
