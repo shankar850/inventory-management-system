@@ -1,0 +1,46 @@
+.app-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    padding: 12px 24px;
+    background: #1e293b;
+    color: #fff;
+  }
+  
+  .brand { font-size: 1.2rem; font-weight: 700; }
+  
+  .nav-links { display: flex; gap: 8px; }
+  
+  .nav-links a {
+    color: #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .nav-links a:hover { background: #334155; color: #fff; }
+  .nav-links a.active { background: #2563eb; color: #fff; }
+  
+  .user-box {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .user-name { font-weight: 600; }
+  
+  .role-badge {
+    background: #334155;
+    color: #e2e8f0;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+  }
+  
+  .logout { background: #dc2626; }
+  .logout:hover { background: #b91c1c; }
+  
+  @media (max-width: 700px) {
+    .user-box { margin-left: 0; width: 100%; justify-content: space-between; }
+  }

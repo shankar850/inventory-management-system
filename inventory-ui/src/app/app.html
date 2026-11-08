@@ -1,12 +1,20 @@
-<h1>Inventory Management System</h1>
+<header class="app-header">
+  <div class="brand">Inventory Management System</div>
 
-@if (auth.isLoggedIn()) {
-  <nav>
-    <a routerLink="/products">Products</a> |
-    <a routerLink="/categories">Categories</a> |
-    <span>{{ auth.username() }} ({{ auth.role() }})</span>
-    <button type="button" (click)="auth.logout()">Logout</button>
-  </nav>
-}
+  @if (auth.isLoggedIn()) {
+    <nav class="nav-links">
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+      <a routerLink="/categories" routerLinkActive="active">Categories</a>
+    </nav>
 
-<router-outlet />
+    <div class="user-box">
+      <span class="user-name">{{ auth.username() }}</span>
+      <span class="role-badge">{{ auth.role() }}</span>
+      <button type="button" class="logout" (click)="auth.logout()">Logout</button>
+    </div>
+  }
+</header>
+
+<main class="container">
+  <router-outlet />
+</main>

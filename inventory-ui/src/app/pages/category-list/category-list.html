@@ -1,34 +1,36 @@
 <h2>Categories</h2>
-<p><a routerLink="/categories/new">+ Add category</a></p>
+<a class="add-link" routerLink="/categories/new">+ Add category</a>
 
 @if (errorMessage()) {
   <p class="error">{{ errorMessage() }}</p>
 }
 
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Products</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (c of categories(); track c.id) {
+<div class="table-wrap">
+  <table>
+    <thead>
       <tr>
-        <td>{{ c.id }}</td>
-        <td>{{ c.name }}</td>
-        <td>{{ c.productCount }}</td>
-        <td>
-          <a [routerLink]="['/categories', c.id, 'edit']">Edit</a>
-          @if (auth.isAdmin()) {
-            <button type="button" (click)="remove(c)">Delete</button>
-          }
-        </td>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Products</th>
+        <th>Actions</th>
       </tr>
-    } @empty {
-      <tr><td colspan="4">No categories found</td></tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @for (c of categories(); track c.id) {
+        <tr>
+          <td data-label="Id">{{ c.id }}</td>
+          <td data-label="Name">{{ c.name }}</td>
+          <td data-label="Products">{{ c.productCount }}</td>
+          <td data-label="Actions" class="actions">
+            <a [routerLink]="['/categories', c.id, 'edit']">Edit</a>
+            @if (auth.isAdmin()) {
+              <button type="button" class="danger" (click)="remove(c)">Delete</button>
+            }
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4">No categories found</td></tr>
+      }
+    </tbody>
+  </table>
+</div>
