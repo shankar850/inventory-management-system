@@ -1,0 +1,48 @@
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  
+  .stat {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 10px;
+    background: #eff6ff;
+    border-left: 5px solid #2563eb;
+  }
+  .stat.warn { background: #fffbeb; border-left-color: #f59e0b; }
+  .stat.danger { background: #fef2f2; border-left-color: #dc2626; }
+  .stat.good { background: #f0fdf4; border-left-color: #16a34a; }
+  
+  .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+  .value { font-size: 1.7rem; font-weight: 700; }
+  
+  h3 { margin: 24px 0 8px; }
+  
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .badge.low { background: #fef3c7; color: #92400e; }
+  .badge.out { background: #fee2e2; color: #991b1b; }
+  
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .bar-label { width: 120px; font-weight: 600; }
+  .bar-track { flex: 1; background: #e2e8f0; border-radius: 999px; height: 14px; overflow: hidden; }
+  .bar-fill { background: #2563eb; height: 100%; border-radius: 999px; }
+  .bar-count { width: 30px; text-align: right; }
+  
+  @media (max-width: 700px) {
+    .bar-label { width: 90px; }
+  }

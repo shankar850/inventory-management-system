@@ -30,7 +30,8 @@ export class Login {
 
     const { username, password } = this.form.getRawValue();
     this.auth.login(username, password).subscribe({
-      next: () => this.router.navigate(['/products']),
+      // next: () => this.router.navigate(['/products']),
+      next: () => this.router.navigate(['/dashboard']),
       error: (err: HttpErrorResponse) =>
         this.errorMessage.set(
           err.status === 401 ? 'Invalid username or password.' : 'Could not sign in. Is the API running?'
