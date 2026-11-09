@@ -82,6 +82,7 @@ These users are created automatically in the Development environment only. The J
 ![Login](docs/images/login.png)
 ![Products](docs/images/products.png)
 ![Swagger](docs/images/swagger.png)
+![Dashboard](docs/images/dashboard.png)
 
 ## Project structure
 
