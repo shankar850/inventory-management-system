@@ -8,8 +8,9 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 
 ## Screenshots
 
-![Login](docs/images/login.png)
+
 ![Dashboard](docs/images/dashboard.png)
+![Login](docs/images/login.png)
 ![Products](docs/images/product.png)
 ![Swagger](docs/images/swagger.png)
 
