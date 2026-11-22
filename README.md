@@ -13,6 +13,8 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 ![Categories](docs/images/categories.png)
 ![Swagger](docs/images/swagger.png)
 
+
+
 ## Tech stack
 
 - **Frontend:** Angular 22, TypeScript, Reactive Forms, standalone components, signals, responsive CSS
