@@ -94,6 +94,12 @@ namespace InventoryManagementSystem.Controllers
 
             return NoContent();
         }
+
+
+
+
+
+
     }
 }
 

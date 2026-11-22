@@ -20,8 +20,10 @@ namespace InventoryManagementSystem.Controllers
             var totalCategories = await _db.Categories.CountAsync();
             var lowStockCount = await _db.Products.CountAsync(p => p.QuantityInStock <= p.ReorderLevel);
             var outOfStockCount = await _db.Products.CountAsync(p => p.QuantityInStock == 0);
-            var stockValue = await _db.Products.SumAsync(p => (decimal?)(p.Price * p.QuantityInStock)) ?? 0m;
-
+            //            var stockValue = await _db.Products.SumAsync(p => (decimal?)(p.Price * p.QuantityInStock)) ?? 0m;   
+            var stockValue = await _db.Products
+                .Select(p => p.Price * p.QuantityInStock)
+                .SumAsync();
             return Ok(new { totalProducts, totalCategories, lowStockCount, outOfStockCount, stockValue });
         }
 
