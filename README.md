@@ -7,9 +7,10 @@ A full-stack inventory management application built with **Angular**, **ASP.NET 
 > Status: work in progress. Products, categories, authentication and the dashboard are complete. Stock adjustments, suppliers and orders are planned.
 
 ## Screenshots
-![Dashboard](docs/images/dashboard.png)
 ![Login](docs/images/login.png)
-![Products](docs/images/product.png)
+![Dashboard](docs/images/dashboard.png)
+![Products](docs/images/products.png)
+![Categories](docs/images/categories.png)
 ![Swagger](docs/images/swagger.png)
 
 ## Tech stack
